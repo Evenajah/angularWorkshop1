@@ -24,10 +24,10 @@
       <div class="ui-g" style="width:250px;margin-bottom:10px">
         <div class="ui-g-12">
           Type :
-          <p-radioButton formControlName="jobType" name="group1" value="Manage" label="Manage" inputId="opt1">
+          <p-radioButton formControlName="jobType" name="group1" value="M" label="Manage" inputId="opt1">
           </p-radioButton>
           &nbsp;
-          <p-radioButton formControlName="jobType" name="group1" value="Operate" label="Operate" inputId="opt2">
+          <p-radioButton formControlName="jobType" name="group1" value="O" label="Operate" inputId="opt2">
           </p-radioButton>
         </div>
 
@@ -39,35 +39,35 @@
       <div class="ui-inputgroup">
         <button pButton type="button" class="ui-button-primary" icon="pi pi-user">
         </button>
-        <input formControlName="firstName" type="text" pInputText placeholder="FirstName">
+        <input pTooltip="Enter firstname" tooltipPosition="top" formControlName="firstName" type="text" pInputText placeholder="FirstName">
       </div>
 
       <br />
       <div class="ui-inputgroup">
         <button pButton type="button" class="ui-button-primary" icon="pi pi-star">
         </button>
-        <input formControlName="lastName" type="text" pInputText placeholder="LastName">
+        <input pTooltip="Enter lastname" tooltipPosition="top" formControlName="lastName" type="text" pInputText placeholder="LastName">
       </div>
       <br />
       <div class="ui-g" style="width:250px;margin-bottom:10px">
         <div class="ui-g-12">
           Gender :
-          <p-radioButton fornControlName="gender" name="group2" value="Male" label="Male" inputId="opt1">
+          <p-radioButton fornControlName="gender" name="group2" value="M" label="Male" inputId="opt1">
           </p-radioButton>
           &nbsp;
-          <p-radioButton name="group2" formControlName="gender" value="Female" label="Female" inputId="opt2">
+          <p-radioButton name="group2" formControlName="gender" value="F" label="Female" inputId="opt2">
           </p-radioButton>
         </div>
 
       </div>
 
-      <button pButton type="button" icon="pi pi-check" label="Search" class="ui-button-success"></button>
+      <button pButton type="button" (click) = "emitItem($event)" icon="pi pi-check" label="Search" class="ui-button-success"></button>
       &nbsp;
-      <button pButton type="button" icon="pi pi-check" label="Clear" class="ui-button-danger"></button>
+      <button pButton type="button" (click) = "clearText()" icon="pi pi-times" label="Clear" class="ui-button-danger"></button>
 
     </div>
 
-  </div>
+  </div> 
   </div>
 
 </div>

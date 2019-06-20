@@ -27,8 +27,7 @@ export class SearchComponent implements OnInit {
   });
 
   constructor(private serviceDepartment: DepartmentService) {
-    this.selectDepartment = [];
-    this.selectJob = [];
+   
   }
 
   ngOnInit() {
@@ -43,6 +42,7 @@ export class SearchComponent implements OnInit {
         this.selectDepartment = response.map(item => {
           return { label: item.departmentName, value: item.departmentCode };
         });
+        this.selectDepartment= [{value:null,label:'Select Department'},...this.selectDepartment];
         // console.log(response);
       });
   }
@@ -52,8 +52,9 @@ export class SearchComponent implements OnInit {
       this.selectJob = response.map(item => {
         return { label: item.jobTitleName, value: item.jobTitleCode };
       });
+      this.selectJob = [{value:null,label:'Select job title'},...this.selectJob];
     });
-    console.log(this.selectJob);
+    // console.log(this.selectJob);
   }
 
   emitItem(event: any) {
@@ -65,5 +66,9 @@ export class SearchComponent implements OnInit {
       );
     }
 
+  }
+
+  clearText(){
+    this.employeeForm.reset();
   }
 }

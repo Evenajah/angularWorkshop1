@@ -13,6 +13,8 @@ import { TableEmployeeComponent } from "./table-employee/table-employee.componen
 import { HttpClientModule } from "@angular/common/http";
 import { GenderPipePipe } from './gender-pipe.pipe';
 import { JobTypePipe } from './job-type.pipe';
+import {TooltipModule} from 'primeng/tooltip';
+
 
 @NgModule({
   declarations: [EmployeeComponent, SearchComponent, TableEmployeeComponent, GenderPipePipe, JobTypePipe],
@@ -24,7 +26,8 @@ import { JobTypePipe } from './job-type.pipe';
     TableModule,
     ButtonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TooltipModule
   ],
   exports: [EmployeeComponent, SearchComponent]
 })
