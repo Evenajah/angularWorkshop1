@@ -29,6 +29,7 @@
         </th>
         <th>
           Remove
+          <a routerLink="/employee/employee">dasdas</a>
         </th>
 
       </tr>
@@ -45,7 +46,7 @@
           {{columns.jobTitle.jobType | jobType}}
         </td>
         <td class="tdItem2" style=text-align:center;>
-          {{columns.firstName + "  " +columns.lastName}}
+          {{columns.title + "  " + columns.firstName + "  " +columns.lastName}}
         </td>
         <td class="tdItem" style=text-align:center;>
           {{columns.gender | genderPipe}}
@@ -55,7 +56,8 @@
           </button>
         </td>
         <td class="tdItem" style=text-align:center;>
-          <button pButton type="button" id="btnIconGroup" class="ui-button-danger" icon="pi pi-times">
+          <button pButton type="button" (click)="confirmDel(columns.employeeId)" id="btnIconGroup"
+            class="ui-button-danger" icon="pi pi-times">
           </button>
         </td>
 
@@ -87,3 +89,23 @@
 
   </p-table>
 </div>
+
+<!--confirmDialog-->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>
+
+
+<p-toast key="toastDel" position="top-right">
+
+
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-check" style="font-size: 3em"></i>
+      <h3>Success</h3>
+      <p>Delete success!</p>
+    </div>
+
+  </ng-template>
+
+
+</p-toast>

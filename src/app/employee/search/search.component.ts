@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { SelectItem } from "../interface/selectDepartment";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { DepartmentService } from "../service/department.service";
@@ -10,6 +10,9 @@ import { DepartmentService } from "../service/department.service";
 })
 export class SearchComponent implements OnInit {
   @Output() changeEvent = new EventEmitter();
+  @Input() mode = 'search';
+
+  
   selectDepartment: SelectItem[];
   selectJob: SelectItem[];
 
@@ -60,6 +63,7 @@ export class SearchComponent implements OnInit {
   emitItem(event: any) {
     if (this.employeeForm.valid) {
       this.changeEvent.emit(this.employeeForm.getRawValue());
+      console.log(this.employeeForm.getRawValue());
     } else {
       Object.values(this.employeeForm.controls).forEach(dirty =>
         dirty.markAsDirty()

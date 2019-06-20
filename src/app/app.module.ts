@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
 
 // Router
-import { RouterModule, Routes } from '@angular/router';
+import * as router from '@angular/router';
 import { EmployeeModule } from './employee/employee.module';
+import { InsertComponent } from './employee/insert/insert.component';
 
 // config route
-const routes: Routes = [
+const routes: router.Routes = [
   { path: '', redirectTo: 'employee', pathMatch: 'full' },
   { path: 'employee', component: EmployeeComponent },
+  { path: 'employee/employee', component: InsertComponent },
   { path: '**', component: EmployeeComponent }
 ];
 
@@ -21,7 +23,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes, {
+    router.RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled'
     }),
     EmployeeModule

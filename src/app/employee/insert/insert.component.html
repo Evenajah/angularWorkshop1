@@ -1,0 +1,179 @@
+<div class="wrapSearch">
+  <div class="ui-g">
+    <div class="ui-g-12"></div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12"></div>
+  </div>
+
+  <div class="formWrap">
+    <div class="HeaderSearch">
+      <h1>Search</h1>
+
+      <div [formGroup]="insertForm">
+
+        <div class="ui-g-12">
+          <div class="ui-g-2">
+            Department :
+          </div>
+
+          <div class="ui-g-2">
+            <p-dropdown formControlName="department" class="inputItem" id="dropdown"
+              [options]="selectDepartment">
+            </p-dropdown>
+          </div>
+
+          <div class="ui-g-2" *ngIf="insertForm.get('department').dirty">
+            <!--validate-->
+            <p-message *ngIf="insertForm.get('department').invalid && insertForm.get('department').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+          &nbsp;
+        </div>
+
+
+        <br />
+        <div class="ui-g-12">
+          <div class="ui-g-2">
+            Jobtitle :
+
+          </div>
+
+          <div class="ui-g-2">
+            <p-dropdown formControlName="jobTitle" class="inputItem" id="dropdown"
+              [options]="selectJob">
+            </p-dropdown>
+          </div>
+
+          <div class="ui-g-2" *ngIf="insertForm.get('jobTitle').dirty">
+            <!--validate-->
+            <p-message *ngIf="insertForm.get('jobTitle').invalid && insertForm.get('jobTitle').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+
+        </div>
+
+        <div class="ui-g-12">
+
+          <div class="ui-g-2 ">
+            Gender :
+          </div>
+          <div class="ui-g-2 ">
+            <p-radioButton (onClick)="changeTitleName(insertForm.get('gender').value)" formControlName="gender"
+              name="group1" value="M" label="Male" inputId="opt1">
+            </p-radioButton>
+            &nbsp;
+            <p-radioButton (onClick)="changeTitleName(insertForm.get('gender').value)" formControlName="gender"
+              name="group1" value="F" label="Female" inputId="opt2">
+            </p-radioButton>
+          </div>
+
+          <div class="ui-g-2" *ngIf="insertForm.get('gender').dirty">
+            <!--validate-->
+            <p-message *ngIf="insertForm.get('gender').invalid && insertForm.get('gender').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+
+        </div>
+
+
+
+        <div class="ui-g-12">
+          <div class="ui-g-2 ">
+            Title :
+          </div>
+          <div class="ui-g-2 ">
+            <p-dropdown formControlName="title" class="inputItem" id="dropdown"
+              [options]="selectTitle">
+            </p-dropdown>
+          </div>
+
+          <div class="ui-g-2" *ngIf="insertForm.get('gender').dirty">
+            <p-message *ngIf="insertForm.get('title').invalid && insertForm.get('title').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+        </div>
+        <hr>
+        <br />
+
+        <div class="ui-g-12">
+          <div class="ui-g-2 ">
+            <div class="ui-inputgroup">
+              <button pButton type="button" class="ui-button-primary" icon="pi pi-user">
+              </button>
+              <input pTooltip="Enter firstname" tooltipPosition="top" formControlName="firstName" type="text" pInputText
+                placeholder="FirstName">
+            </div>
+          </div>
+
+
+          <div class="ui-g-2" *ngIf="insertForm.get('firstName').dirty">
+            <p-message *ngIf="insertForm.get('firstName').invalid && insertForm.get('firstName').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+
+        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g-2 ">
+            <div class="ui-inputgroup">
+              <button pButton type="button" class="ui-button-primary" icon="pi pi-star">
+              </button>
+              <input pTooltip="Enter lastname" tooltipPosition="top" formControlName="lastName" type="text" pInputText
+                placeholder="LastName">
+            </div>
+          </div>
+          <div class="ui-g-2" *ngIf="insertForm.get('lastName').dirty">
+            <p-message *ngIf="insertForm.get('lastName').invalid && insertForm.get('lastName').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+          </div>
+
+        </div>
+        <br />
+        
+        
+          <div class="ui-g-12">
+              <div class="ui-g-2">
+            Address : <textarea rows="5" formControlName="address" cols="30" pInputTextarea></textarea>
+          </div>
+            <div class="ui-g-2" *ngIf="insertForm.get('address').dirty">
+            <p-message *ngIf="insertForm.get('address').invalid && insertForm.get('address').hasError('required')"
+              severity="error" text="Field is required">
+            </p-message>
+            </div>
+          </div>
+
+          <button pButton type="button" (click)="insertClicking()" icon="pi pi-check" label="Search"
+            class="ui-button-success"></button>
+          &nbsp;
+          <button pButton type="button" (click)="clearText()" icon="pi pi-times" label="Clear"
+            class="ui-button-danger"></button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <p-toast key="toastAdd" position="top-right">
+
+
+    <ng-template let-message pTemplate="message">
+      <div style="text-align: center">
+        <i class="pi pi-check" style="font-size: 3em"></i>
+        <h3>Success</h3>
+        <p>Add data success!</p>
+      </div>
+
+    </ng-template>
+
+
+  </p-toast>

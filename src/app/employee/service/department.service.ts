@@ -22,9 +22,17 @@ export class DepartmentService {
     });
   }
 
-  searchWithCondition(condition = {}){
+  searchTableWithCondition(condition = {}){
     return this.http.get<Employee[]>(`/workshop-api/api/employee/queryEmployeeByCondition`, {
       params: condition
     });
+  }
+
+  insertDatawithForm(data:any){
+    return this.http.post(`/workshop-api/api/employee`,data);
+  }
+
+  deleteEmployee(employeeId:String){
+    return this.http.delete(`/workshop-api/api/employee/${employeeId}`)
   }
 }

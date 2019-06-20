@@ -11,13 +11,23 @@ import { RadioButtonModule } from "primeng/radiobutton";
 import { ReactiveFormsModule } from "@angular/forms";
 import { TableEmployeeComponent } from "./table-employee/table-employee.component";
 import { HttpClientModule } from "@angular/common/http";
-import { GenderPipePipe } from './gender-pipe.pipe';
-import { JobTypePipe } from './job-type.pipe';
-import {TooltipModule} from 'primeng/tooltip';
+import { GenderPipePipe } from './pipe/gender-pipe.pipe';
+import { JobTypePipe } from './pipe/job-type.pipe';
+import { TooltipModule } from 'primeng/tooltip';
+import { RouterModule } from '@angular/router';
+import { InsertComponent } from './insert/insert.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
+// confirmdialog
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { ToastModule } from "primeng/toast";
+import { DialogModule } from "primeng/dialog";
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 @NgModule({
-  declarations: [EmployeeComponent, SearchComponent, TableEmployeeComponent, GenderPipePipe, JobTypePipe],
+  declarations: [EmployeeComponent, SearchComponent, TableEmployeeComponent, GenderPipePipe, JobTypePipe,InsertComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -27,8 +37,16 @@ import {TooltipModule} from 'primeng/tooltip';
     ButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    TooltipModule
+    TooltipModule,
+    RouterModule,
+    InputTextareaModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DialogModule,
+    MessagesModule,
+    MessageModule
   ],
-  exports: [EmployeeComponent, SearchComponent]
+  exports: [EmployeeComponent, SearchComponent, InsertComponent],
+  providers: [ConfirmationService, MessageService]
 })
-export class EmployeeModule {}
+export class EmployeeModule { }
