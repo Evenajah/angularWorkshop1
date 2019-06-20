@@ -1,0 +1,89 @@
+<div class="tableDepartment">
+  <p-table [value]="valueList" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[5,10,15]" selectionMode="single"
+    class="tableWrap">
+    <!--[scrollable]="true" scrollHeight="450px" -->
+
+    <!--AddDataBtn-->
+
+
+    <ng-template pTemplate="header" let-columns>
+
+      <tr>
+        <th>
+          Department
+        </th>
+        <th>
+          Job title
+        </th>
+        <th>
+          Job type
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Gender
+        </th>
+        <th>
+          Edit
+        </th>
+        <th>
+          Remove
+        </th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-columns>
+      <tr id="tableRow" appBudgetOverload [pSelectableRow]="columns">
+        <td class="tdItem" style=text-align:center;>
+          {{columns.department.departmentName}}
+        </td>
+        <td class="tdItem2" style=text-align:center;>
+          {{columns.jobTitle.jobTitleName}}
+        </td>
+        <td class="tdItem" style=text-align:center;>
+          {{columns.jobTitle.jobType | jobType}}
+        </td>
+        <td class="tdItem2" style=text-align:center;>
+          {{columns.firstName + "  " +columns.lastName}}
+        </td>
+        <td class="tdItem" style=text-align:center;>
+          {{columns.gender | genderPipe}}
+        </td>
+        <td class="tdItem" style=text-align:center;>
+          <button pButton type="button" id="btnIconGroup" class="ui-button-primary" icon="pi pi-tag">
+          </button>
+        </td>
+        <td class="tdItem" style=text-align:center;>
+          <button pButton type="button" id="btnIconGroup" class="ui-button-danger" icon="pi pi-times">
+          </button>
+        </td>
+
+
+
+        <!-- <td class="tdItem2" style=text-align:Right;>
+          {{columns.telephone}}
+        </td>
+        <td class="tdItem" style=text-align:center;>
+
+          <button pButton type="button" (click)="confirmDel(columns.departmentCode)" id="btnIconGroup"
+            class="ui-button-danger" icon="pi pi-times">
+          </button>
+
+          &nbsp;
+          <button pButton type="button" id="btnIconGroup" class="ui-button-primary" icon="pi pi-eye"
+            >
+          </button>
+
+          &nbsp;
+          <button pButton type="button" class="ui-button-warning" icon="pi pi-tag" id="btnIconGroup"
+            style="color:white;" >
+          </button>
+
+        </td> -->
+      </tr>
+    </ng-template>
+
+
+  </p-table>
+</div>
