@@ -25,9 +25,10 @@ import { ToastModule } from "primeng/toast";
 import { DialogModule } from "primeng/dialog";
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
-  declarations: [EmployeeComponent, SearchComponent, TableEmployeeComponent, GenderPipePipe, JobTypePipe,InsertComponent],
+  declarations: [EmployeeComponent, SearchComponent, TableEmployeeComponent, GenderPipePipe, JobTypePipe,InsertComponent, EditComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,

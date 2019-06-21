@@ -29,7 +29,7 @@
         </th>
         <th>
           Remove
-          <a routerLink="/employee/employee">dasdas</a>
+          <button pButton class="ui-button-primary"  type="button" icon="pi pi-plus" id="btnIconGroup" routerLink="/employee/add"></button>
         </th>
 
       </tr>
@@ -52,7 +52,7 @@
           {{columns.gender | genderPipe}}
         </td>
         <td class="tdItem" style=text-align:center;>
-          <button pButton type="button" id="btnIconGroup" class="ui-button-primary" icon="pi pi-tag">
+          <button routerLink="/employee/edit/{{columns.employeeId}}"pButton type="button" id="btnIconGroup" class="ui-button-primary" icon="pi pi-tag">
           </button>
         </td>
         <td class="tdItem" style=text-align:center;>

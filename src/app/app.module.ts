@@ -9,12 +9,14 @@ import { EmployeeComponent } from './employee/employee.component';
 import * as router from '@angular/router';
 import { EmployeeModule } from './employee/employee.module';
 import { InsertComponent } from './employee/insert/insert.component';
+import { EditComponent } from './employee/edit/edit.component';
 
 // config route
 const routes: router.Routes = [
   { path: '', redirectTo: 'employee', pathMatch: 'full' },
   { path: 'employee', component: EmployeeComponent },
-  { path: 'employee/employee', component: InsertComponent },
+  { path: 'employee/add', component: InsertComponent },
+  { path: 'employee/edit/:employeeId', component: EditComponent },
   { path: '**', component: EmployeeComponent }
 ];
 
