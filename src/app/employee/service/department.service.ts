@@ -39,7 +39,7 @@ export class DepartmentService {
   }
 
   searchEmployeeItem(employeeId: String) {
-    return this.http.get<Employee>(
+    return this.http.get<any>(
       `/workshop-api/api/employee/queryEmployeeAndSkillById/${employeeId}`
     );
   }
@@ -47,6 +47,25 @@ export class DepartmentService {
   updateEmployee(employee:any){
     return this.http.put<Employee>(
       `/workshop-api/api/employee`,employee
+    );
+  }
+
+
+  editSkill(data:any){
+    return this.http.put(
+      `/workshop-api/api/skill`,data
+    );
+  }
+
+  delSkill(id:string){
+    return this.http.delete(
+      `/workshop-api/api/skill/${id}`
+    );
+  }
+
+  addSkill(data:any){
+    return this.http.post(
+      `/workshop-api/api/skill/`,data
     );
   }
 }

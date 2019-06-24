@@ -1,3 +1,3 @@
-<app-search (changeEvent)=searchTable($event)></app-search>
+<app-search (clearTable) = "clearTable()" (changeEvent)=searchTable($event)></app-search>
 <br /><br />
 <app-table-employee #tableEmployee></app-table-employee> 

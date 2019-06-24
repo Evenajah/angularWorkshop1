@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from "@angular/core";
 import { SelectItem } from "../interface/selectDepartment";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { DepartmentService } from "../service/department.service";
+import { TableEmployeeComponent } from '../table-employee/table-employee.component';
 
 @Component({
   selector: "app-search",
@@ -11,7 +12,7 @@ import { DepartmentService } from "../service/department.service";
 export class SearchComponent implements OnInit {
   @Output() changeEvent = new EventEmitter();
   @Input() mode = 'search';
-
+  @Output() clearTable = new EventEmitter();
   
   selectDepartment: SelectItem[];
   selectJob: SelectItem[];
@@ -74,5 +75,6 @@ export class SearchComponent implements OnInit {
 
   clearText(){
     this.employeeForm.reset();
+    this.clearTable.emit();
   }
 }

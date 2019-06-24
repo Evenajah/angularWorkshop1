@@ -28,4 +28,7 @@ export class EmployeeComponent implements OnInit {
     this.table.search(newObject);
   }
 
+  clearTable(){
+    this.table.valueList = [];
+  }
 }

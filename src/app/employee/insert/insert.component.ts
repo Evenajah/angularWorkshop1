@@ -10,7 +10,7 @@ import { SelectItem } from '../interface/selectDepartment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DepartmentService } from '../service/department.service';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-insert',
@@ -26,7 +26,10 @@ export class InsertComponent implements OnInit, AfterViewInit {
   selectJob: SelectItem[];
   selectTitle: SelectItem[];
   rememberData: any;
-
+  skillRecieve: any;
+  displaySkill: boolean;
+  displaySkillAdd: boolean;
+  display500:boolean;
   // formGroup
   insertForm = new FormGroup({
     department: new FormControl(null, [Validators.required]),
@@ -42,14 +45,26 @@ export class InsertComponent implements OnInit, AfterViewInit {
       Validators.maxLength(50),
       Validators.required
     ]),
-    address: new FormControl(null, [Validators.required])
+    address: new FormControl(null, [
+      Validators.required,
+      Validators.maxLength(200)
+    ])
   });
+
+  skillForm = new FormGroup({
+    skillId: new FormControl(null),
+    skillDesc: new FormControl(null),
+    skillName: new FormControl(null),
+  })
+
+
 
   constructor(
     private serviceDepartment: DepartmentService,
     private messageService: MessageService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngAfterViewInit(): void {
     // this.rememberData = this.insertForm.getRawValue();
@@ -57,12 +72,18 @@ export class InsertComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
     this.searchDepartmentItem();
     this.searchJobtitleItem();
     if (this.mode === 'edit') {
+     
       this.serviceDepartment
         .searchEmployeeItem(this.route.snapshot.params.employeeId)
         .subscribe(response => {
+       
+          console.log(response);
+          this.skillRecieve = response.skills;
+          console.log(this.skillRecieve);
           this.insertForm.patchValue(response);
           this.rememberData = this.insertForm.getRawValue();
 
@@ -76,8 +97,16 @@ export class InsertComponent implements OnInit, AfterViewInit {
           //   }
 
           // ];
+        },err => {
+          if(err.status === 500){
+            this.display500 = true;
+            }
         });
     }
+  }
+
+  returnStatus500(){
+    this.router.navigateByUrl('/employee');
   }
 
   searchDepartmentItem(condition = {}) {
@@ -193,4 +222,103 @@ export class InsertComponent implements OnInit, AfterViewInit {
       );
     }
   }
+
+  onSkillRowSelect(event: any) {
+    console.log(event);
+    this.displaySkill = true;
+    this.skillForm.patchValue(event.data);
+  }
+
+  onSkillAdd(event: any) {
+    console.log(event);
+    this.displaySkillAdd = true;
+
+
+  }
+
+  addSkill() {
+
+    if (this.skillForm.valid) {
+      const skillValue = this.skillForm.getRawValue();
+      const Skill: any = {
+        employee: { employeeId: this.route.snapshot.params.employeeId },
+        skillId: skillValue.skillId,
+        skillDesc: skillValue.skillDesc,
+        skillName: skillValue.skillName
+      }
+
+      this.serviceDepartment.addSkill(Skill).subscribe(response => {
+        console.log(response);
+        this.displaySkillAdd = false;
+        this.messageService.add({
+          key: 'toastAdd',
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Via MessageService'
+        });
+        this.onHideDialog();
+        this.ngOnInit();
+      })
+    }
+
+  }
+
+
+  onHideDialog() {
+    this.skillForm.reset();
+  }
+
+  editSkill(event: any) {
+
+
+    if (this.skillForm.valid) {
+      const skillValue = this.skillForm.getRawValue();
+      const Skill: any = {
+        employee: { employeeId: this.route.snapshot.params.employeeId },
+        skillId: skillValue.skillId,
+        skillDesc: skillValue.skillDesc,
+        skillName: skillValue.skillName
+      }
+
+      console.log("valueSkill", Skill);
+
+      this.serviceDepartment.editSkill(Skill).subscribe(response => {
+        this.displaySkill = false;
+        this.messageService.add({
+          key: 'toastEdit',
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Via MessageService'
+        });
+
+        console.log(response);
+      })
+      this.ngOnInit();
+    }
+
+
+
+  }
+
+  delSkill(event: any) {
+    const skillValue = this.skillForm.getRawValue();
+
+    this.serviceDepartment.delSkill(skillValue.skillId).subscribe(response => {
+      console.log(response);
+      this.displaySkill = false;
+      this.messageService.add({
+        key: 'toastDel',
+        severity: 'success',
+        summary: 'Service Message',
+        detail: 'Via MessageService'
+      });
+
+      console.log(response);
+      this.ngOnInit();
+    })
+
+  }
+
+
+
 }
