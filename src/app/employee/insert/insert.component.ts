@@ -29,7 +29,7 @@ export class InsertComponent implements OnInit, AfterViewInit {
   skillRecieve: any;
   displaySkill: boolean;
   displaySkillAdd: boolean;
-  display500:boolean;
+  display500: boolean;
   // formGroup
   insertForm = new FormGroup({
     department: new FormControl(null, [Validators.required]),
@@ -75,37 +75,53 @@ export class InsertComponent implements OnInit, AfterViewInit {
 
     this.searchDepartmentItem();
     this.searchJobtitleItem();
+
     if (this.mode === 'edit') {
-     
-      this.serviceDepartment
-        .searchEmployeeItem(this.route.snapshot.params.employeeId)
-        .subscribe(response => {
-       
-          console.log(response);
-          this.skillRecieve = response.skills;
-          console.log(this.skillRecieve);
-          this.insertForm.patchValue(response);
-          this.rememberData = this.insertForm.getRawValue();
-
-          // console.log(this.rememberData);
-          // console.log(this.insertForm.getRawValue());
-          // this.insertForm.controls.department.s
-          // this.selectDepartment = [
-          //   {
-          //     label: response.department.departmentName,
-          //     value: { departmentCode: response.department.departmentCode }
-          //   }
-
-          // ];
-        },err => {
-          if(err.status === 500){
-            this.display500 = true;
-            }
-        });
+      this.settingEditMode();
     }
   }
 
-  returnStatus500(){
+  settingEditMode() {
+
+    this.serviceDepartment
+      .searchEmployeeItem(this.route.snapshot.params.employeeId)
+      .subscribe(response => {
+
+        console.log("response", response);
+        this.skillRecieve = response.skills;
+        console.log(this.skillRecieve);
+        this.insertForm.patchValue(response);
+        this.rememberData = this.insertForm.getRawValue();
+
+
+        console.log(response.department.departmentCode);
+        this.selectJob = this.selectJob.filter(entity => entity.value.jobTitleCode !== response.jobTitle.jobTitleCode && entity.value.jobTitleCode !== null);
+
+        this.selectJob = [
+          { value: response.jobTitle.jobTitleCode, label: response.jobTitle.jobTitleName },
+          ...this.selectJob
+        ];
+
+        this.selectDepartment = this.selectDepartment.filter(entity => entity.value.departmentCode !== response.department.departmentCode && entity.value.departmentCode !== null);
+
+        this.selectDepartment = [
+          { value: response.department.departmentCode, label: response.department.departmentName },
+          ...this.selectDepartment
+        ];
+
+        this.changeTitleName(response.gender);
+
+
+      }, err => {
+        if (err.status === 500) {
+          this.display500 = true;
+        }
+      });
+
+  }
+
+
+  returnStatus500() {
     this.router.navigateByUrl('/employee');
   }
 
@@ -120,7 +136,7 @@ export class InsertComponent implements OnInit, AfterViewInit {
           };
         });
         this.selectDepartment = [
-          { value: null, label: 'Select Department' },
+          { value: { departmentCode: null }, label: 'Select Department' },
           ...this.selectDepartment
         ];
         // console.log(response);
@@ -136,7 +152,7 @@ export class InsertComponent implements OnInit, AfterViewInit {
         };
       });
       this.selectJob = [
-        { value: null, label: 'Select job title' },
+        { value: { jobTitleCode: null }, label: 'Select job title' },
         ...this.selectJob
       ];
     });
@@ -199,7 +215,7 @@ export class InsertComponent implements OnInit, AfterViewInit {
   }
 
   updateClicking() {
-    // console.log(this.insertForm.getRawValue());
+    console.log(this.insertForm.getRawValue());
 
     const newObject = {
       ...this.insertForm.getRawValue(),
