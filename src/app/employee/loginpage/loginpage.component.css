@@ -1,0 +1,23 @@
+.loginForm{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left:50%;
+    top:50%;
+    background-color:#DCDCDC;
+    padding:2vw;
+}
+
+.topLogin{
+    text-align:center;
+}
+
+input{
+    padding:1.01vw;
+}
+.btnLogin{
+    width:100% !important;
+}
+#btnRegis{
+    width:100% !important;
+    color:white !important;
+}

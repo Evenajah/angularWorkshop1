@@ -1,22 +1,31 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from "@angular/core";
-import { SelectItem } from "../interface/selectDepartment";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { DepartmentService } from "../service/department.service";
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild
+} from '@angular/core';
+import { SelectItem } from '../interface/selectDepartment';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DepartmentService } from '../service/department.service';
 import { TableEmployeeComponent } from '../table-employee/table-employee.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.css"]
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
   @Output() changeEvent = new EventEmitter();
   @Input() mode = 'search';
   @Output() clearTable = new EventEmitter();
-  
+
   selectDepartment: SelectItem[];
   selectJob: SelectItem[];
-
+  displayUser: boolean;
+  userData: any;
   // formGroup
   employeeForm = new FormGroup({
     departmentCode: new FormControl(null),
@@ -30,13 +39,22 @@ export class SearchComponent implements OnInit {
     gender: new FormControl(null)
   });
 
-  constructor(private serviceDepartment: DepartmentService) {
-   
-  }
+  constructor(
+    private serviceDepartment: DepartmentService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.searchDepartmentItem();
     this.searchJobtitleItem();
+
+    this.serviceDepartment.getUser().subscribe(response => {
+      if (response === null) {
+        this.router.navigateByUrl('/employee/employee');
+      } else {
+        this.userData = response;
+      }
+    });
   }
 
   searchDepartmentItem(condition = {}) {
@@ -46,9 +64,16 @@ export class SearchComponent implements OnInit {
         this.selectDepartment = response.map(item => {
           return { label: item.departmentName, value: item.departmentCode };
         });
-        this.selectDepartment= [{value:null,label:'Select Department'},...this.selectDepartment];
+        this.selectDepartment = [
+          { value: null, label: 'Select Department' },
+          ...this.selectDepartment
+        ];
         // console.log(response);
       });
+  }
+
+  showUser() {
+    this.displayUser = true;
   }
 
   searchJobtitleItem(condition = {}) {
@@ -56,7 +81,10 @@ export class SearchComponent implements OnInit {
       this.selectJob = response.map(item => {
         return { label: item.jobTitleName, value: item.jobTitleCode };
       });
-      this.selectJob = [{value:null,label:'Select job title'},...this.selectJob];
+      this.selectJob = [
+        { value: null, label: 'Select job title' },
+        ...this.selectJob
+      ];
     });
     // console.log(this.selectJob);
   }
@@ -70,10 +98,9 @@ export class SearchComponent implements OnInit {
         dirty.markAsDirty()
       );
     }
-
   }
 
-  clearText(){
+  clearText() {
     this.employeeForm.reset();
     this.clearTable.emit();
   }

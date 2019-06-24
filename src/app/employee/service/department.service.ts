@@ -1,13 +1,15 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { HttpClient } from "@angular/common/http";
-import { Employee } from "../interface/table";
+import { HttpClient } from '@angular/common/http';
+import { Employee } from '../interface/table';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DepartmentService {
   constructor(private http: HttpClient) {}
+
+  userId: string;
 
   searchDepartmentItem(condition = {}) {
     return this.http.get<any[]>(`/workshop-api/api/department`, {
@@ -44,28 +46,27 @@ export class DepartmentService {
     );
   }
 
-  updateEmployee(employee:any){
-    return this.http.put<Employee>(
-      `/workshop-api/api/employee`,employee
-    );
+  updateEmployee(employee: any) {
+    return this.http.put<Employee>(`/workshop-api/api/employee`, employee);
   }
 
-
-  editSkill(data:any){
-    return this.http.put(
-      `/workshop-api/api/skill`,data
-    );
+  editSkill(data: any) {
+    return this.http.put(`/workshop-api/api/skill`, data);
   }
 
-  delSkill(id:string){
-    return this.http.delete(
-      `/workshop-api/api/skill/${id}`
-    );
+  delSkill(id: string) {
+    return this.http.delete(`/workshop-api/api/skill/${id}`);
   }
 
-  addSkill(data:any){
-    return this.http.post(
-      `/workshop-api/api/skill/`,data
-    );
+  addSkill(data: any) {
+    return this.http.post(`/workshop-api/api/skill/`, data);
+  }
+
+  login(data: any) {
+    return this.http.post(`/workshop-api/api/login`, data);
+  }
+
+  getUser() {
+    return this.http.get(`/workshop-api/api/user/${this.userId}`);
   }
 }

@@ -54,17 +54,15 @@ export class InsertComponent implements OnInit, AfterViewInit {
   skillForm = new FormGroup({
     skillId: new FormControl(null),
     skillDesc: new FormControl(null),
-    skillName: new FormControl(null),
-  })
-
-
+    skillName: new FormControl(null)
+  });
 
   constructor(
     private serviceDepartment: DepartmentService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngAfterViewInit(): void {
     // this.rememberData = this.insertForm.getRawValue();
@@ -72,7 +70,6 @@ export class InsertComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.searchDepartmentItem();
     this.searchJobtitleItem();
 
@@ -82,47 +79,58 @@ export class InsertComponent implements OnInit, AfterViewInit {
   }
 
   settingEditMode() {
-
     this.serviceDepartment
       .searchEmployeeItem(this.route.snapshot.params.employeeId)
-      .subscribe(response => {
+      .subscribe(
+        response => {
+          console.log('response', response);
+          this.skillRecieve = response.skills;
+          console.log(this.skillRecieve);
+          this.insertForm.patchValue(response);
+          this.rememberData = this.insertForm.getRawValue();
 
-        console.log("response", response);
-        this.skillRecieve = response.skills;
-        console.log(this.skillRecieve);
-        this.insertForm.patchValue(response);
-        this.rememberData = this.insertForm.getRawValue();
+          console.log(response.department.departmentCode);
+          this.selectJob = this.selectJob.filter(
+            entity =>
+              entity.value.jobTitleCode !== response.jobTitle.jobTitleCode &&
+              entity.value.jobTitleCode !== null
+          );
 
+          this.selectJob = [
+            {
+              value: response.jobTitle.jobTitleCode,
+              label: response.jobTitle.jobTitleName
+            },
+            ...this.selectJob
+          ];
 
-        console.log(response.department.departmentCode);
-        this.selectJob = this.selectJob.filter(entity => entity.value.jobTitleCode !== response.jobTitle.jobTitleCode && entity.value.jobTitleCode !== null);
+          this.selectDepartment = this.selectDepartment.filter(
+            entity =>
+              entity.value.departmentCode !==
+                response.department.departmentCode &&
+              entity.value.departmentCode !== null
+          );
 
-        this.selectJob = [
-          { value: response.jobTitle.jobTitleCode, label: response.jobTitle.jobTitleName },
-          ...this.selectJob
-        ];
+          this.selectDepartment = [
+            {
+              value: response.department.departmentCode,
+              label: response.department.departmentName
+            },
+            ...this.selectDepartment
+          ];
 
-        this.selectDepartment = this.selectDepartment.filter(entity => entity.value.departmentCode !== response.department.departmentCode && entity.value.departmentCode !== null);
-
-        this.selectDepartment = [
-          { value: response.department.departmentCode, label: response.department.departmentName },
-          ...this.selectDepartment
-        ];
-
-        this.changeTitleName(response.gender);
-
-
-      }, err => {
-        if (err.status === 500) {
-          this.display500 = true;
+          this.changeTitleName(response.gender);
+        },
+        err => {
+          if (err.status === 500) {
+            this.display500 = true;
+          }
         }
-      });
-
+      );
   }
 
-
   returnStatus500() {
-    this.router.navigateByUrl('/employee');
+    this.router.navigateByUrl('/employee/employee/search');
   }
 
   searchDepartmentItem(condition = {}) {
@@ -248,12 +256,9 @@ export class InsertComponent implements OnInit, AfterViewInit {
   onSkillAdd(event: any) {
     console.log(event);
     this.displaySkillAdd = true;
-
-
   }
 
   addSkill() {
-
     if (this.skillForm.valid) {
       const skillValue = this.skillForm.getRawValue();
       const Skill: any = {
@@ -261,7 +266,7 @@ export class InsertComponent implements OnInit, AfterViewInit {
         skillId: skillValue.skillId,
         skillDesc: skillValue.skillDesc,
         skillName: skillValue.skillName
-      }
+      };
 
       this.serviceDepartment.addSkill(Skill).subscribe(response => {
         console.log(response);
@@ -274,19 +279,15 @@ export class InsertComponent implements OnInit, AfterViewInit {
         });
         this.onHideDialog();
         this.ngOnInit();
-      })
+      });
     }
-
   }
-
 
   onHideDialog() {
     this.skillForm.reset();
   }
 
   editSkill(event: any) {
-
-
     if (this.skillForm.valid) {
       const skillValue = this.skillForm.getRawValue();
       const Skill: any = {
@@ -294,9 +295,9 @@ export class InsertComponent implements OnInit, AfterViewInit {
         skillId: skillValue.skillId,
         skillDesc: skillValue.skillDesc,
         skillName: skillValue.skillName
-      }
+      };
 
-      console.log("valueSkill", Skill);
+      console.log('valueSkill', Skill);
 
       this.serviceDepartment.editSkill(Skill).subscribe(response => {
         this.displaySkill = false;
@@ -308,12 +309,9 @@ export class InsertComponent implements OnInit, AfterViewInit {
         });
 
         console.log(response);
-      })
+      });
       this.ngOnInit();
     }
-
-
-
   }
 
   delSkill(event: any) {
@@ -331,10 +329,6 @@ export class InsertComponent implements OnInit, AfterViewInit {
 
       console.log(response);
       this.ngOnInit();
-    })
-
+    });
   }
-
-
-
 }

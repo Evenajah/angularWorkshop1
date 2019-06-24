@@ -39,14 +39,14 @@
       <div class="ui-inputgroup">
         <button pButton type="button" class="ui-button-primary" icon="pi pi-user">
         </button>
-        <input pTooltip="Enter firstname" tooltipPosition="top" formControlName="firstName" type="text" pInputText placeholder="FirstName">
+        <input class="inputText" pTooltip="Enter firstname" tooltipPosition="top" formControlName="firstName" type="text" pInputText placeholder="FirstName">
       </div>
 
       <br />
       <div class="ui-inputgroup">
         <button pButton type="button" class="ui-button-primary" icon="pi pi-star">
         </button>
-        <input pTooltip="Enter lastname" tooltipPosition="top" formControlName="lastName" type="text" pInputText placeholder="LastName">
+        <input class="inputText" pTooltip="Enter lastname" tooltipPosition="top" formControlName="lastName" type="text" pInputText placeholder="LastName">
       </div>
       <br />
       <div class="ui-g" style="width:250px;margin-bottom:10px">
@@ -66,8 +66,33 @@
       <button pButton type="button" id="clearBtn"(click) = "clearText()" icon="pi pi-times" label="Clear" class="ui-button-danger"></button>
 
     </div>
-
-  </div> 
+    <br/>
+    <hr/>
+    <button pButton pTooltip="Show user" type="button" id="clearBtn" (click) = "showUser()" icon="pi pi-user" class="ui-button-primary"></button>
+    &nbsp;
+    <button pButton pTooltip="Logout" type="button" id="clearBtn" (click) = "showUser()" icon="pi pi-power-off" class="ui-button-danger"></button>
+  </div>  
   </div>
 
 </div>
+
+<p-dialog [closeOnEscape]="true"  header="User" [(visible)]="displayUser"
+  [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '600px', height: '200px'}" blockScroll="true"
+  dismissableMask="true" [resizable]="true" appendTo="body">
+    <b>รหัสประจำตัว</b> : {{userData.userId}} <br/>
+    <b>ชื่อ สกุล :</b> {{userData.firstName + " "+ userData.lastName}} <br/>
+    <b>เพศ :</b> {{userData.gender | genderPipe}}<br/>
+    <b>เบอร์โทร :</b>  {{userData.tel}}<br/>
+    <b>Email : </b> {{userData.email}}<br/>
+  
+
+
+  
+    <br />
+
+
+ 
+ 
+
+
+</p-dialog>

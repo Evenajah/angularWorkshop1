@@ -1,0 +1,31 @@
+<div class="loginForm" [formGroup]="userForm">
+
+  <h2 class="topLogin">Login</h2>
+
+  <span class="ui-float-label">
+    <input placeholder="ชื่อผู้ใช้งาน" pTooltip="กรอกชื่อผู้ใช้" id="float-input" type="text" formControlName="user" size="30" pInputText>
+
+  </span>
+  <br />
+  <span class="ui-float-label">
+    <input placeholder="รหัสผ่าน" class="btnRegis" pTooltip="กรอกรหัสผ่าน"  id="float-input" type="text" size="30" pInputText formControlName="password">
+
+  </span>
+  <br/>
+
+  <button pButton type="button" class="btnLogin" label="Login" (click)="onClickLogin()" ></button>
+  &nbsp;<br />
+  <button pButton type="button" id="btnRegis" label="Register" class="ui-button-warning"></button>
+
+
+
+</div>
+
+<p-toast key="toastErr" position="top-right">
+
+
+
+
+
+</p-toast>
+
